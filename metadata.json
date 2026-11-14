@@ -1,0 +1,6 @@
+{
+  "name": "HYDRODRIVE 3D",
+  "description": "Interactive Hydrogen Fuel-Cell Vehicle Engineering Simulator combining 3D cutaway visualization, thermodynamic energy conversion modeling, vehicle dynamics, and a virtual physics laboratory.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

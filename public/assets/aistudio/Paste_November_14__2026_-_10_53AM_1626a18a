@@ -1,0 +1,976 @@
+# MASTER DEVELOPMENT PROMPT
+## Project: HYDRODRIVE 3D
+### Interactive Hydrogen Fuel-Cell Vehicle Engineering Simulator
+
+You are a senior full-stack developer, Three.js graphics engineer, automotive mechanical engineer, hydrogen fuel-cell systems specialist, and UI/UX designer.
+
+Your task is to **build a complete, visually impressive, technically credible, interactive 3D hydrogen fuel-cell vehicle simulation website** suitable for a first-year engineering physics project.
+
+This must be a real, functioning application, not a static mockup, slideshow, concept description, or collection of disconnected demonstrations.
+
+The finished website should combine:
+
+- A realistic, interactive 3D vehicle.
+- Fully rotatable 3D models.
+- Transparent automotive cutaway visualizations.
+- Detailed hydrogen-system components.
+- Animated hydrogen, electrical, and mechanical energy flows.
+- Physics-based energy conversion calculations.
+- Vehicle efficiency and consumption simulations.
+- Interactive engineering controls.
+- Scientific explanations and diagrams.
+- Live charts, numerical results, and comparisons.
+- A premium, professional automotive engineering interface.
+
+The project should look like an interactive automotive research demonstrator, not a beginner HTML assignment.
+
+# 1. EXISTING PROJECT AND TECHNICAL REQUIREMENTS
+
+I already have a functional Three.js project.
+
+**Existing project directory:**
+
+`C:\Varun\3d car model`
+
+**Existing technology stack:**
+- Vite
+- Vanilla JavaScript
+- Three.js
+- HTML5
+- CSS3
+- Node.js and npm
+
+**Existing asset:**
+
+`public/car.glb`
+
+**Already implemented:**
+- A successfully loaded 3D car model.
+- Mouse-controlled camera orbit.
+- Zooming.
+- X-axis, Y-axis, and Z-axis rotation sliders.
+- A normal car view.
+- A transparent car view.
+- Simplified hydrogen tank, fuel-cell stack, and electric motor meshes.
+
+**Current issue:**
+
+The simplified internal components have alignment and positioning problems because their orientation, scale, and placement were not correctly calibrated against the imported car model.
+
+### Critical instructions
+
+1. Inspect my existing project before modifying it.
+2. Retain Vite, vanilla JavaScript, and Three.js unless a change is absolutely necessary.
+3. Preserve my existing `public/car.glb` asset.
+4. Do not initialize a new project over the current one.
+5. Do not delete existing assets unnecessarily.
+6. Improve, refactor, and extend the current implementation.
+7. Install only the dependencies actually required.
+8. Keep the complete project runnable locally with `npm run dev`.
+9. Deliver functional code, not pseudocode or incomplete placeholders.
+10. Implement features in working increments and test after each major stage.
+11. Explain the completed implementation in language understandable to a programming beginner.
+
+# 2. VISUAL DESIGN AND WEBSITE EXPERIENCE
+
+Create an immersive automotive engineering dashboard.
+
+### Design direction
+
+Use a sophisticated design inspired by modern automotive digital twins, engineering visualization software, and premium electric-vehicle configurators.
+
+Visual characteristics:
+- Deep charcoal and midnight-blue backgrounds.
+- Cyan highlights for hydrogen.
+- Green or teal for fuel-cell conversion.
+- Amber or orange for electrical and mechanical output.
+- Subtle glass-effect panels.
+- Realistic metallic textures.
+- Professional typography.
+- Smooth transitions.
+- Clean technical diagrams.
+- Beautiful responsive layouts.
+
+Avoid childish graphics, unnecessary animations, excessive neon effects, and cluttered controls.
+
+### Main layout
+
+**Header**
+- Project title: HYDRODRIVE 3D.
+- Subtitle: Interactive Hydrogen Fuel-Cell Vehicle Simulator.
+- Navigation between major simulation sections.
+- Reset Simulation button.
+- Help or tutorial button.
+
+**Main visualization area**
+- Large interactive WebGL 3D viewport.
+- Car centered prominently.
+- Realistic environmental lighting and shadows.
+- Ground plane or engineering studio environment.
+- Component labels and selection highlights.
+
+**Control panel**
+- Camera presets.
+- Car rotation controls.
+- Transparency controls.
+- Animation speed.
+- Operating state.
+- Component visibility.
+
+**Engineering dashboard**
+- Efficiency percentages.
+- Energy input and output.
+- Hydrogen mass.
+- Estimated vehicle range.
+- Power and energy losses.
+- Live visualization of the energy conversion chain.
+
+Provide a polished desktop layout and a usable responsive mobile layout.
+
+# 3. REALISTIC 3D CAR MODEL
+
+The car must look like an actual modern passenger vehicle, preferably a realistic sedan or crossover suitable for illustrating a fuel-cell electric vehicle.
+
+### Model requirements
+
+Load the existing `public/car.glb` using Three.js GLTFLoader.
+
+Preserve:
+- Original geometry.
+- Original textures.
+- Original materials.
+- Vehicle proportions.
+- Correct model orientation.
+- Reasonable visual quality.
+
+Improve rendering with:
+- Physically based materials where supported.
+- Environment reflections.
+- Realistic studio lighting.
+- Contact shadows.
+- Ambient occlusion where appropriate.
+- Antialiasing.
+- Proper tone mapping.
+- Smooth camera movement.
+
+Support replacing the model with another legally usable GLB/GLTF model.
+
+If the current car model is low quality, provide a documented option for replacing it with a higher-quality, appropriately licensed model.
+
+Do not claim to have downloaded, created, or integrated a realistic model unless that asset actually exists and has been successfully loaded.
+
+Provide a graceful placeholder model if the main model fails to load.
+
+# 4. PRECISE 3D POSITIONING AND COORDINATE SYSTEM
+
+Fix the existing internal-component alignment problems properly.
+
+Do not rely on arbitrary offsets such as repeatedly subtracting 0.8 from the Y coordinate.
+
+Implement a consistent coordinate system for the vehicle and its components.
+
+Requirements:
+- Determine the model's actual scale and bounds.
+- Identify or calibrate the vehicle's longitudinal, lateral, and vertical axes.
+- Handle GLB models with different orientations.
+- Normalize the model into a consistent vehicle coordinate space.
+- Preserve the relationship between the original model and internal components.
+- Do not incorrectly apply scaling to only one part of the system.
+- Ensure all internal components rotate together with the vehicle.
+- Maintain alignment during camera movement, object rotation, and transparency changes.
+
+Create a **Component Position Calibration Mode** with controls for:
+- X position.
+- Y position.
+- Z position.
+- X, Y, and Z rotation.
+- Component scale.
+- Vehicle forward-axis selection.
+- Reset to recommended placement.
+
+Where practical, position internal components using normalized proportions of vehicle dimensions.
+
+Save calibration settings in localStorage so they persist after the browser is refreshed.
+
+Do not assume the largest bounding-box dimension always identifies the car's longitudinal axis without allowing correction.
+
+# 5. INTERACTIVE THREE-AXIS ROTATION
+
+Implement two separate rotation systems.
+
+### Camera orbit
+
+Allow the user to:
+- Drag to orbit around the vehicle.
+- Zoom using the scroll wheel.
+- Pan the camera.
+- Inspect the car from every relevant angle.
+
+Use OrbitControls with smooth damping.
+
+### Vehicle object rotation
+
+Allow the entire vehicle assembly to rotate around:
+- X-axis.
+- Y-axis.
+- Z-axis.
+
+Provide three sliders displaying the current angles in degrees.
+
+Add camera preset buttons:
+- Front.
+- Rear.
+- Left.
+- Right.
+- Top.
+- Bottom.
+- Isometric.
+
+Include:
+- Reset Rotation.
+- Reset Camera.
+- Auto Rotate.
+- Pause Auto Rotate.
+
+Make camera transitions smooth.
+
+All vehicle components must stay aligned and rotate together.
+
+# 6. TRANSPARENT CUTAWAY AND EXPLODED VIEW
+
+Create multiple viewing modes.
+
+**Mode 1: Exterior View**
+
+Show the complete vehicle with normal materials.
+
+**Mode 2: Transparent Cutaway**
+
+Make the outer vehicle partially transparent while keeping the internal components visible.
+
+**Mode 3: Internal Systems View**
+
+Hide the body and show a detailed visualization of the vehicle chassis and hydrogen components.
+
+**Mode 4: Exploded View**
+
+Animate the hydrogen tank, fuel-cell stack, motor, battery buffer, and power electronics moving apart into an organized exploded technical view.
+
+Add connecting guide lines and labels.
+
+**Mode 5: Energy Flow View**
+
+Display the complete vehicle with animated energy-flow paths.
+
+Make transitions smooth and reversible.
+
+Prevent transparent surfaces from excessively obscuring the internal components. Use suitable material handling, render ordering, outlines, or selective visibility.
+
+# 7. HYDROGEN FUEL-CELL VEHICLE COMPONENTS
+
+Create recognizable 3D models for the following systems:
+
+### A. Hydrogen storage tank
+- Cylindrical pressure vessel.
+- Rounded end caps.
+- Distinctive technical appearance.
+- Visible hydrogen label.
+- Storage-capacity parameter.
+- User-selectable highlighting.
+
+### B. Fuel-cell stack
+- Rectangular stack assembly.
+- Multiple repeating fuel-cell layers.
+- Hydrogen inlet.
+- Air/oxygen inlet.
+- Water outlet.
+- Electrical output.
+
+### C. Electric traction motor
+- Cylindrical motor housing.
+- Visible rotational shaft where appropriate.
+- Mechanical output representation.
+- Connection to driven wheels.
+
+### D. High-voltage buffer battery
+- Compact battery pack.
+- Distinct from the hydrogen fuel-cell stack.
+- Explain its role in transient power demand and regenerative braking.
+
+### E. Power electronics
+- DC/DC converter.
+- Inverter.
+- Power-distribution connections.
+
+### F. Thermal management
+- Cooling components.
+- Heat rejection pathways.
+- Temperature indicator, identified as illustrative if a full thermal model is not implemented.
+
+### G. Wheels and drivetrain
+- Four wheels.
+- Axles.
+- Simplified drive connections.
+- Front-wheel-drive or rear-wheel-drive configuration where feasible.
+
+The internal models may initially be constructed procedurally using Three.js geometry, but should be visually recognizable, carefully positioned, and proportionally plausible.
+
+Do not misrepresent simplified procedural models as manufacturer-accurate CAD geometry.
+
+# 8. COMPONENT INTERACTION AND EDUCATIONAL EXPLANATIONS
+
+Make the internal components clickable.
+
+When a user clicks a component:
+1. Highlight it.
+2. Smoothly focus the camera on it.
+3. Display its name.
+4. Explain its scientific purpose.
+5. Show relevant parameters.
+6. Show its input and output energy.
+7. Provide an optional detailed explanation.
+
+Examples:
+
+**Hydrogen tank**
+Stores hydrogen as chemical energy.
+
+**Fuel cell**
+Converts hydrogen chemical energy into electrical energy using an electrochemical reaction involving oxygen.
+
+**Electric motor**
+Converts electrical energy into mechanical rotation.
+
+**Battery buffer**
+Stores electrical energy and supports transient loads or regenerative braking.
+
+Use clear first-year engineering explanations.
+
+Add a guided tour that takes the user through every component in sequence.
+
+# 9. ANIMATED HYDROGEN AND ENERGY FLOW
+
+Create visually impressive but scientifically meaningful animations.
+
+Use smooth moving particles, paths, emissive materials, glowing arrows, or animated lines.
+
+Differentiate between:
+
+- Hydrogen gas flow: cyan particles.
+- Air/oxygen supply: pale blue particles.
+- Electrical energy flow: yellow or amber particles.
+- Mechanical energy transfer: rotating shafts and wheels.
+- Heat losses: red or orange heat indicators.
+- Water production: blue droplets or vapor illustration.
+
+### Correct operational sequence
+
+**Off-board hydrogen production:**
+
+Electricity + water → electrolyzer → hydrogen + oxygen
+
+Hydrogen is processed, stored, and delivered to the vehicle.
+
+**On-board vehicle operation:**
+
+Hydrogen storage tank → fuel-cell stack → power electronics → electric traction motor → driven wheels
+
+The fuel cell also uses oxygen from air and produces water and heat.
+
+The buffer battery may provide or receive electrical energy through the vehicle's power electronics.
+
+IMPORTANT:
+- Do not portray water as a free fuel.
+- Do not imply the vehicle creates its own hydrogen without external energy.
+- Do not place the electrolyzer inside the car unless specifically illustrating a hypothetical system.
+- Clearly distinguish hydrogen production from hydrogen consumption.
+
+### Animation controls
+
+Provide:
+- Start.
+- Pause.
+- Resume.
+- Reset.
+- Animation-speed slider.
+- Step-by-step mode.
+- Continuous mode.
+- Slow-motion mode.
+
+Animation rates should respond meaningfully to simulated operating conditions.
+
+Do not claim decorative particle movement is a physically accurate computational-fluid-dynamics simulation.
+
+# 10. INTERACTIVE ELECTROLYSIS SIMULATOR
+
+Create a separate interactive module demonstrating hydrogen production from water.
+
+Display:
+- Water supply.
+- Electrolyzer.
+- External electricity supply.
+- Hydrogen output.
+- Oxygen output.
+- Energy losses.
+
+Include the chemical reaction:
+
+2H₂O → 2H₂ + O₂
+
+Explain that electrolysis requires external electrical energy.
+
+### User controls
+
+- Electrical energy input in kWh.
+- Electrolyzer efficiency.
+- Operating duration.
+- Electrical input power in kW.
+- Optional electricity-source selection.
+- Hydrogen production amount.
+
+### Calculations
+
+Use hydrogen lower heating value:
+
+33.33 kWh/kg.
+
+Define electrolyzer efficiency explicitly on an LHV basis.
+
+Hydrogen chemical energy:
+
+E_H2 = E_input × η_electrolyzer
+
+Hydrogen mass:
+
+m_H2 = E_H2 / 33.33
+
+Theoretical water consumption:
+
+m_water ≈ 9 × m_H2
+
+Theoretical oxygen production:
+
+m_O2 ≈ 8 × m_H2
+
+Use kilograms consistently.
+
+Clearly distinguish theoretical stoichiometric water requirement from actual system water consumption.
+
+Explain why real electrolyzers require more energy than the chemical energy retained in the hydrogen.
+
+# 11. HYDROGEN STORAGE AND FUEL-CELL SIMULATOR
+
+Create a dedicated module showing hydrogen entering a fuel cell and electrical energy emerging.
+
+Use the electrochemical reaction:
+
+2H₂ + O₂ → 2H₂O + energy
+
+Show:
+- Hydrogen input.
+- Oxygen input.
+- Electricity output.
+- Water production.
+- Heat losses.
+
+Interactive parameters:
+- Hydrogen mass.
+- Tank capacity.
+- Fuel-cell efficiency.
+- Fuel-cell power rating.
+- Hydrogen conditioning or delivery efficiency.
+- Power electronics efficiency.
+- Electric motor efficiency.
+- Drivetrain efficiency.
+
+Display:
+- Hydrogen chemical energy.
+- Useful electrical energy.
+- Mechanical output energy.
+- Total conversion losses.
+- Individual stage losses.
+- Overall efficiency.
+
+Use credible configurable assumptions rather than presenting universal fixed vehicle specifications.
+
+# 12. COMPLETE ENERGY CONVERSION CALCULATOR
+
+Create an interactive energy-flow dashboard.
+
+The user must be able to change every major efficiency input and instantly see the calculated results.
+
+Use these primary variables:
+
+- E_input = external electrical energy supplied to electrolysis.
+- η_el = electrolyzer efficiency.
+- η_condition = hydrogen processing/storage/delivery energy-retention factor.
+- η_fc = fuel-cell efficiency.
+- η_pe = power-electronics efficiency.
+- η_motor = electric-motor efficiency.
+- η_drive = mechanical drivetrain efficiency.
+
+Calculate:
+
+E_hydrogen = E_input × η_el
+
+E_stored = E_hydrogen × η_condition
+
+E_fuelcell = E_stored × η_fc
+
+E_powerElectronics = E_fuelcell × η_pe
+
+E_motor = E_powerElectronics × η_motor
+
+E_wheels = E_motor × η_drive
+
+Overall electricity-to-wheels efficiency:
+
+η_overall = E_wheels / E_input × 100%
+
+All efficiencies must be represented as fractions internally and displayed as percentages.
+
+Show individual energy losses at each stage.
+
+Ensure energy is conserved in the simplified accounting model and avoid double-counting.
+
+Distinguish:
+- Electricity-to-hydrogen efficiency.
+- Hydrogen-to-electricity efficiency.
+- Tank-to-wheels efficiency.
+- Electricity-to-wheels efficiency.
+
+Make it clear that these are different system boundaries.
+
+Clearly label any omitted losses, including auxiliary loads or thermal-management consumption.
+
+# 13. VEHICLE PERFORMANCE SIMULATOR
+
+Create a simplified physics-based driving simulation.
+
+User-adjustable parameters:
+- Vehicle mass.
+- Speed.
+- Frontal area.
+- Drag coefficient.
+- Rolling resistance coefficient.
+- Road gradient.
+- Motor efficiency.
+- Fuel-cell power rating.
+- Hydrogen tank capacity.
+- Available hydrogen.
+
+Use appropriate SI units.
+
+### Aerodynamic drag
+
+F_drag = 0.5 × ρ × Cd × A × v²
+
+Where:
+- ρ = air density.
+- Cd = drag coefficient.
+- A = frontal area.
+- v = vehicle speed in m/s.
+
+### Rolling resistance
+
+F_roll = Crr × m × g
+
+### Grade resistance
+
+F_grade = m × g × sin(θ)
+
+### Acceleration force
+
+F_acceleration = m × a
+
+### Total required tractive force
+
+F_total = F_drag + F_roll + F_grade + F_acceleration
+
+### Wheel power
+
+P_wheels = F_total × v
+
+When calculating propulsion electrical demand, account for motor, inverter, and drivetrain losses.
+
+Do not treat negative traction power as unlimited regeneration.
+
+### Range estimation
+
+Estimate:
+- Hydrogen consumption in kg/100 km.
+- Energy consumption in kWh/100 km.
+- Remaining hydrogen mass.
+- Estimated range in kilometres.
+- Power demand in kW.
+
+A range estimate must use a physically consistent energy or distance-consumption model.
+
+Do not simply multiply arbitrary efficiency percentages by an invented mileage constant.
+
+Explain model limitations, especially when speed, acceleration, gradients, and regenerative braking are simplified.
+
+# 14. ANIMATED DRIVING MODE
+
+Implement a vehicle-driving demonstration.
+
+Allow the user to:
+- Start or stop the vehicle.
+- Set requested speed.
+- Adjust simulated acceleration.
+- Adjust road gradient.
+- Observe estimated power demand.
+- Observe hydrogen consumption.
+- Observe estimated remaining range.
+
+Create a moving-road or scrolling-environment visual effect so the vehicle appears to be driving.
+
+Rotate the wheels in proportion to simulated vehicle speed and wheel radius.
+
+If the imported GLB has separately controllable wheel meshes, identify and animate them correctly.
+
+If the wheels are merged into the model:
+- Do not pretend they can be animated independently.
+- Provide a safe procedural wheel solution or an explicit wheel-separation workflow.
+- Preserve the original model unless a valid replacement is available.
+
+If a real time-step vehicle dynamics model is implemented, ensure available traction and power constrain the resulting acceleration.
+
+Otherwise, explicitly label the driving animation as a visualization and calculate steady-state consumption independently.
+
+# 15. REAL-TIME ENGINEERING DASHBOARD
+
+Create interactive indicators showing:
+
+- Input energy: kWh.
+- Hydrogen production: kg.
+- Stored hydrogen energy: kWh.
+- Fuel-cell electricity output: kWh.
+- Motor mechanical energy: kWh.
+- Wheel energy: kWh.
+- Overall efficiency: %.
+- Energy losses: kWh.
+- Vehicle speed: km/h.
+- Power demand: kW.
+- Hydrogen consumption: kg/100 km.
+- Estimated range: km.
+
+Update displayed values immediately when user parameters change.
+
+Provide a clean energy-flow Sankey-style visualization or equivalent interactive energy bars.
+
+Use well-labelled charts:
+1. Energy at each conversion stage.
+2. Losses by component.
+3. Efficiency comparison.
+4. Power demand versus speed.
+5. Estimated range versus hydrogen capacity.
+
+Use accurate scales and units.
+
+Do not confuse power, measured in kW, with energy, measured in kWh.
+
+# 16. COMPARISON MODE
+
+Include a comparison between:
+
+**Hydrogen fuel-cell electric vehicle**
+
+and
+
+**Battery electric vehicle**
+
+Compare:
+- Energy conversion pathways.
+- Electricity-to-wheels efficiency.
+- Major energy losses.
+- Energy storage principles.
+- Refuelling or recharging process.
+- Simplified vehicle efficiency.
+
+Both pathways must use equivalent starting boundaries when comparing overall efficiency.
+
+Explain the assumptions behind every comparison.
+
+Avoid unsupported claims that hydrogen vehicles are always superior or always inferior.
+
+Provide a factual, balanced engineering explanation of where each technology may be useful.
+
+# 17. EDUCATIONAL MODE
+
+Create a beginner-friendly guided learning experience.
+
+Suggested sections:
+
+1. What is hydrogen?
+2. Why is hydrogen an energy carrier rather than a primary energy source?
+3. How does water electrolysis work?
+4. How is hydrogen stored?
+5. How does a fuel cell generate electricity?
+6. How does an electric motor produce motion?
+7. Why does energy conversion cause losses?
+8. How is overall efficiency calculated?
+9. What affects vehicle energy consumption?
+10. How do fuel-cell vehicles compare with battery-electric vehicles?
+
+Include equations, diagrams, short explanations, and interactive examples.
+
+Use accurate scientific terminology but explain everything in understandable language.
+
+# 18. EXPERIMENT AND RESULTS MODE
+
+The website must support an actual computational experiment.
+
+Create a section called **Virtual Physics Laboratory**.
+
+The user should be able to:
+- Select a baseline scenario.
+- Change one independent variable at a time.
+- Run simulation trials.
+- Record calculated outputs.
+- Compare multiple trials.
+- Generate graphs.
+- Export results as CSV.
+- Reset experiments.
+- Save current configurations locally.
+
+Suggested experiments:
+
+**Experiment A:** Effect of electrolyzer efficiency on total energy conversion.
+
+**Experiment B:** Effect of fuel-cell efficiency on useful electrical output.
+
+**Experiment C:** Effect of motor efficiency on wheel energy.
+
+**Experiment D:** Effect of vehicle speed on power consumption.
+
+**Experiment E:** Effect of vehicle mass on estimated energy consumption.
+
+Each experiment should have:
+- Objective.
+- Hypothesis.
+- Independent variable.
+- Dependent variable.
+- Controlled variables.
+- Procedure.
+- Results.
+- Graph.
+- Interpretation.
+- Limitations.
+
+Distinguish clearly between computed simulation outputs and physically measured experimental results.
+
+# 19. REALISM AND SCIENTIFIC ACCURACY
+
+Scientific correctness is more important than decorative realism.
+
+Requirements:
+- Use the laws of thermodynamics consistently.
+- Do not create energy from nothing.
+- Do not portray hydrogen as an unlimited energy source.
+- Account for conversion losses.
+- Use consistent units.
+- Use physically meaningful equations.
+- Use hydrogen LHV consistently in the main calculation model.
+- Label illustrative efficiency assumptions clearly.
+- Do not mix LHV-based and HHV-based efficiency figures without conversion or explanation.
+- Differentiate system efficiencies from individual component efficiencies.
+- Avoid fabricated specifications or measured results.
+- Clearly indicate whether a calculation represents steady-state or transient behavior.
+- Distinguish visual animations from physics solvers.
+
+Where precise real-world values are unavailable, use transparent assumptions with editable controls.
+
+Include a **Model Assumptions and Limitations** section.
+
+Reference trustworthy engineering documentation, including US Department of Energy, European Commission Joint Research Centre, and authoritative Three.js documentation.
+
+# 20. USABILITY AND PERFORMANCE
+
+The application must:
+- Work in modern desktop browsers.
+- Remain usable on mobile screens.
+- Handle window resizing.
+- Avoid unnecessary render-loop work.
+- Dispose of unused Three.js resources.
+- Handle WebGL errors gracefully.
+- Display loading progress.
+- Handle missing model files.
+- Recover sensibly from invalid inputs.
+- Restrict parameters to reasonable numerical bounds.
+- Persist user preferences and simulation parameters using localStorage.
+- Include accessible labels and readable contrast.
+- Provide a full-screen 3D viewer option.
+- Support screenshots of the current visualization.
+
+Aim for smooth interactive performance on an RTX 5060 laptop, while providing reduced-quality settings for lower-end devices.
+
+# 21. ASSET MANAGEMENT
+
+Use the existing `public/car.glb` as the primary car asset.
+
+Where additional models or textures are required:
+- Prefer original procedural meshes or properly licensed assets.
+- Provide source credits and licence information.
+- Do not use pirated or copyrighted assets without permission.
+- Keep asset paths organized.
+- Do not assume remote assets will always be available.
+- Provide local fallback geometry.
+
+If a high-quality realistic model cannot be obtained automatically, retain my existing car model and explain exactly how to replace it later.
+
+# 22. SOFTWARE ARCHITECTURE
+
+Keep the code modular and maintainable.
+
+Separate responsibilities into modules such as:
+
+- Scene setup.
+- Model loading.
+- Camera controls.
+- Car rotation.
+- Component creation and alignment.
+- Material transparency.
+- Cutaway and exploded views.
+- Animation system.
+- Physics calculations.
+- Vehicle dynamics.
+- User-interface controls.
+- Chart rendering.
+- Experiment data.
+- Configuration management.
+- Local persistence.
+
+Avoid writing the entire application in one enormous JavaScript file.
+
+Use descriptive names and comments explaining complex calculations.
+
+Keep physics calculations independent from 3D rendering wherever practical so they can be tested separately.
+
+# 23. TESTING AND VALIDATION
+
+Before declaring the project complete, verify:
+
+### 3D functionality
+- Car loads successfully.
+- Model is centered and oriented correctly.
+- Camera orbit works.
+- X, Y, and Z object rotation works.
+- Components remain aligned with the vehicle.
+- Internal components do not float outside the vehicle unintentionally.
+- Transparent view works.
+- Exploded view works.
+- Animation controls work.
+- Model-loading errors are handled gracefully.
+
+### Physics functionality
+- All efficiency calculations are correct.
+- Input changes update outputs.
+- Losses are accounted for without double-counting.
+- Hydrogen mass calculations use the declared heating-value basis.
+- No impossible efficiency values are accepted.
+- Vehicle calculations use consistent units.
+- Charts match numerical outputs.
+- Exported results match displayed results.
+
+### General functionality
+- No JavaScript runtime errors.
+- No broken buttons.
+- No missing dependencies.
+- No broken asset paths.
+- No serious layout overlap.
+- No false claims of scientific precision.
+
+Implement automated tests for the main physics functions and meaningful manual verification steps for the 3D interface.
+
+# 24. FINAL DELIVERABLES
+
+Deliver a complete working website with:
+
+1. Functional source code.
+2. Realistic 3D vehicle viewer.
+3. Three-axis vehicle rotation.
+4. Transparent cutaway.
+5. Internal hydrogen components.
+6. Animated energy flows.
+7. Electrolysis simulation.
+8. Fuel-cell simulation.
+9. Energy efficiency calculator.
+10. Vehicle-performance simulation.
+11. Engineering dashboard.
+12. Interactive charts.
+13. Experiment mode.
+14. Educational explanations.
+15. Responsive interface.
+16. Clear asset credits.
+17. Local startup instructions.
+18. Scientific limitations and assumptions.
+
+Also provide a beginner-friendly README explaining:
+- What every important project file does.
+- How to install dependencies.
+- How to launch the development server.
+- How to replace the GLB car model.
+- How to control the simulation.
+- How each physics calculation works.
+- How to demonstrate the project to a physics professor.
+
+# 25. DEVELOPMENT PROCESS
+
+I am a first-year engineering student with very little experience in web development, JavaScript, Blender, or Three.js.
+
+Do not assume I understand advanced programming concepts.
+
+However, do not compromise the engineering quality of the completed project.
+
+Work in the following order:
+
+**Phase 1: Foundation**
+Inspect and stabilize the existing Vite/Three.js application. Correct car orientation, component placement, and coordinate systems.
+
+**Phase 2: Visual Engineering Model**
+Improve the car rendering, internal components, transparency, camera system, cutaway view, and exploded view.
+
+**Phase 3: Physics Engine**
+Implement verified electrolysis, hydrogen storage, fuel-cell, and drivetrain energy calculations.
+
+**Phase 4: Animation**
+Add hydrogen flow, electricity flow, rotating components, driving visualization, and animation controls.
+
+**Phase 5: Dashboard**
+Build the professional website interface with live controls, calculation panels, charts, and parameter presets.
+
+**Phase 6: Virtual Laboratory**
+Implement experiments, results, comparisons, plotting, and CSV exporting.
+
+**Phase 7: Scientific Validation**
+Test all equations, inspect animation behavior, verify energy conservation, and document assumptions.
+
+**Phase 8: Final Polish**
+Improve visual quality, usability, responsiveness, documentation, and error handling.
+
+After each phase, verify that the application still launches and the completed features actually function.
+
+Prioritize a smaller, fully operational and scientifically sound implementation over a visually impressive application containing broken or fake features.
+
+If functionality cannot be implemented accurately within the current environment, explain that limitation, provide an explicitly labelled approximation or fallback, and continue with the remaining functional requirements.
+
+**Do not stop at project planning. Inspect the existing files and begin implementing the application. Deliver actual working code and clear instructions.**
+
+## FINAL OBJECTIVE
+
+Create a complete interactive 3D digital engineering demonstrator that allows a user to:
+
+- Inspect a realistic hydrogen fuel-cell car from any angle.
+- Rotate the vehicle on all three axes.
+- Look through the body to study the internal systems.
+- Select components and learn how they operate.
+- Watch animated hydrogen and energy conversion pathways.
+- Change operating parameters.
+- Observe scientifically justified calculation results.
+- Compare different system efficiencies.
+- Simulate simplified driving conditions.
+- Record virtual experimental results.
+- Understand the physics behind hydrogen fuel-cell transportation.
+
+The finished website must be educational, technically credible, immersive, interactive, visually professional, and suitable for a first-year engineering physics project presentation.
